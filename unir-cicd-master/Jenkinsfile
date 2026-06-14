@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Source') {
+            steps {
+                git 'https://github.com/delfinalber/entornos-integracion-actividad-3.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building stage!'
+                dir('unir-cicd-master') {
+                    sh 'make build'
+                }
+            }
+        }
+        stage('Unit tests') {
+            steps {
+                dir('unir-cicd-master') {
+                    sh 'make test-unit'
+                }
+                archiveArtifacts artifacts: 'unir-cicd-master/results/*.xml'
+            }
+        }
+    }
+    post {
+        always {
+            junit 'unir-cicd-master/results/*_result.xml'
+            cleanWs()
+        }
+        success {
+            mail to: 'delfinalber@gmail.com',
+                 subject: "Pipeline OK: ${currentBuild.fullDisplayName}",
+                 body: "El pipeline ha finalizado correctamente.\n\nProyecto: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}"
+        }
+        failure {
+            mail to: 'delfinalber@gmail.com',
+                 subject: "Pipeline FALLIDO: ${currentBuild.fullDisplayName}",
+                 body: "El pipeline ha fallado.\n\nProyecto: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}"
+        }
+    }
+}
