@@ -19,24 +19,27 @@ pipeline {
             steps {
                 dir('unir-cicd-master') {
                     sh 'make test-unit'
+                    sh 'test -f results/unit_result.xml'
                 }
-                archiveArtifacts artifacts: 'unir-cicd-master/results/*.xml'
+                archiveArtifacts artifacts: 'unir-cicd-master/results/*.xml', allowEmptyArchive: false
             }
         }
         stage('API tests') {
             steps {
                 dir('unir-cicd-master') {
                     sh 'make test-api'
+                    sh 'test -f results/api_result.xml'
                 }
-                archiveArtifacts artifacts: 'unir-cicd-master/results/api_result.xml'
+                archiveArtifacts artifacts: 'unir-cicd-master/results/api_result.xml', allowEmptyArchive: false
             }
         }
         stage('E2E tests') {
             steps {
                 dir('unir-cicd-master') {
                     sh 'make test-e2e'
+                    sh 'test -f results/cypress_result.xml'
                 }
-                archiveArtifacts artifacts: 'unir-cicd-master/results/cypress_result.xml'
+                archiveArtifacts artifacts: 'unir-cicd-master/results/cypress_result.xml', allowEmptyArchive: false
             }
         }
     }
