@@ -19,13 +19,13 @@ Fetching upstream changes from https://github.com/delfinalber/entornos-integraci
  > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
 Avoid second fetch
  > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
-Checking out Revision f2bfd4dd87e29dc3c4086bc0b71411bef3c82bc6 (refs/remotes/origin/main)
+Checking out Revision af2693dcb5e40277e90796c3c385625277df979b (refs/remotes/origin/main)
  > git config core.sparsecheckout # timeout=10
- > git checkout -f f2bfd4dd87e29dc3c4086bc0b71411bef3c82bc6 # timeout=10
+ > git checkout -f af2693dcb5e40277e90796c3c385625277df979b # timeout=10
  > git branch -a -v --no-abbrev # timeout=10
- > git checkout -b main f2bfd4dd87e29dc3c4086bc0b71411bef3c82bc6 # timeout=10
-Commit message: "actividad-3-entornos-de-integracion-114-06-2026"
- > git rev-list --no-walk b6ba830f3da3ab09ad66a36dd2a0faa08253a855 # timeout=10
+ > git checkout -b main af2693dcb5e40277e90796c3c385625277df979b # timeout=10
+Commit message: "actividad-3-entornos-de-integracion-15-06-2026"
+ > git rev-list --no-walk af2693dcb5e40277e90796c3c385625277df979b # timeout=10
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
@@ -46,33 +46,33 @@ docker build -t calculator-app .
 #2 DONE 0.8s
 
 #3 [internal] load .dockerignore
-#3 transferring context: 2B 0.0s done
-#3 DONE 0.0s
+#3 transferring context: 2B done
+#3 DONE 0.1s
 
 #4 [internal] load build context
 #4 DONE 0.0s
 
 #5 [1/7] FROM docker.io/library/python:3.6-slim@sha256:2cfebc27956e6a55f78606864d91fe527696f9e32a724e6f9702b5f9602d0474
-#5 resolve docker.io/library/python:3.6-slim@sha256:2cfebc27956e6a55f78606864d91fe527696f9e32a724e6f9702b5f9602d0474 0.1s done
-#5 DONE 0.1s
+#5 resolve docker.io/library/python:3.6-slim@sha256:2cfebc27956e6a55f78606864d91fe527696f9e32a724e6f9702b5f9602d0474 0.0s done
+#5 DONE 0.0s
 
 #4 [internal] load build context
 #4 transferring context: 9.46kB 0.0s done
-#4 DONE 0.0s
+#4 DONE 0.1s
 
-#6 [2/7] RUN mkdir -p /opt/calc
+#6 [3/7] WORKDIR /opt/calc
 #6 CACHED
 
 #7 [5/7] COPY app ./app
 #7 CACHED
 
-#8 [6/7] COPY test ./test
+#8 [2/7] RUN mkdir -p /opt/calc
 #8 CACHED
 
-#9 [3/7] WORKDIR /opt/calc
+#9 [4/7] COPY .coveragerc .pylintrc pyproject.toml pytest.ini requires ./
 #9 CACHED
 
-#10 [4/7] COPY .coveragerc .pylintrc pyproject.toml pytest.ini requires ./
+#10 [6/7] COPY test ./test
 #10 CACHED
 
 #11 [7/7] RUN pip install -r requires
@@ -80,20 +80,21 @@ docker build -t calculator-app .
 
 #12 exporting to image
 #12 exporting layers 0.0s done
-#12 exporting manifest sha256:4b6a03d9968ab434971b7b43ceca4edd6dabb674e7b31107ece937a2b0c5f13f done
+#12 exporting manifest sha256:4b6a03d9968ab434971b7b43ceca4edd6dabb674e7b31107ece937a2b0c5f13f 0.0s done
 #12 exporting config sha256:50d123df8acf895a069cca41a8abec0ecce92869c8d9f25955b18ad22b4dda53 done
-#12 exporting attestation manifest sha256:b910f54751706cfcaec40fd3b9dd5543415b4f93c247899c432bf1279ff4436f
-#12 exporting attestation manifest sha256:b910f54751706cfcaec40fd3b9dd5543415b4f93c247899c432bf1279ff4436f 0.1s done
-#12 exporting manifest list sha256:a1fbd375d4003bc03b0f6dbb43327d6e857fbe3499138676546535820e7dc1b4 0.0s done
-#12 naming to docker.io/library/calculator-app:latest 0.0s done
-#12 unpacking to docker.io/library/calculator-app:latest 0.0s done
-#12 DONE 0.3s
+#12 exporting attestation manifest sha256:a1375c0757308c93c5fc0c94eec83b4063044c91367dc7a1ad47326c98f92632 0.0s done
+#12 exporting manifest list sha256:90c028879dd783034d5d812213abce2633f0e60efb1b422646098ff726d7a82d 0.0s done
+#12 naming to docker.io/library/calculator-app:latest
+#12 naming to docker.io/library/calculator-app:latest done
+#12 unpacking to docker.io/library/calculator-app:latest
+#12 unpacking to docker.io/library/calculator-app:latest 1.6s done
+#12 DONE 1.8s
 docker build -t calc-web ./web
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
 #1 transferring dockerfile: 150B 0.0s done
-#1 DONE 0.0s
+#1 DONE 0.1s
 
 #2 [internal] load metadata for docker.io/library/nginx:latest
 #2 DONE 0.7s
@@ -104,10 +105,11 @@ docker build -t calc-web ./web
 
 #4 [internal] load build context
 #4 transferring context: 2.58kB 0.0s done
-#4 DONE 0.0s
+#4 DONE 0.1s
 
 #5 [1/3] FROM docker.io/library/nginx:latest@sha256:608a100c71651bf5b773c89083b4a1ad7ef4b2bd05d7a7e552271e03123692ad
-#5 resolve docker.io/library/nginx:latest@sha256:608a100c71651bf5b773c89083b4a1ad7ef4b2bd05d7a7e552271e03123692ad 0.1s done
+#5 resolve docker.io/library/nginx:latest@sha256:608a100c71651bf5b773c89083b4a1ad7ef4b2bd05d7a7e552271e03123692ad
+#5 resolve docker.io/library/nginx:latest@sha256:608a100c71651bf5b773c89083b4a1ad7ef4b2bd05d7a7e552271e03123692ad 0.0s done
 #5 DONE 0.1s
 
 #6 [2/3] COPY ./index.html /usr/share/nginx/html
@@ -120,12 +122,12 @@ docker build -t calc-web ./web
 #8 exporting layers done
 #8 exporting manifest sha256:a8a5f688753b98f6136ad02e958e8e907044997274f214f3d8f2259aa370fba4 done
 #8 exporting config sha256:7c1afe0b0189f9d31f60691b1428a640b3cfe5d131348092a0fec4b47e989c95 done
-#8 exporting attestation manifest sha256:6ccffe810593ec056535e5d8afbff49fa461fd71d78f57f8b46d282d1b8241f5 0.1s done
-#8 exporting manifest list sha256:77515bc7ab5379d4397b7f0f68b90599aa771d803fb37c59a544b4018b56da72
-#8 exporting manifest list sha256:77515bc7ab5379d4397b7f0f68b90599aa771d803fb37c59a544b4018b56da72 0.0s done
+#8 exporting attestation manifest sha256:e2c8fbbbb9ccc504e7bb5e1660d6945800c1b7f3494bead6aa21239634550649 0.0s done
+#8 exporting manifest list sha256:05cda1b15b4d24cdcaf411467ba7eea5fdd4e1885b0a8e8c69eb9d4884a36225
+#8 exporting manifest list sha256:05cda1b15b4d24cdcaf411467ba7eea5fdd4e1885b0a8e8c69eb9d4884a36225 0.0s done
 #8 naming to docker.io/library/calc-web:latest done
-#8 unpacking to docker.io/library/calc-web:latest 0.0s done
-#8 DONE 0.2s
+#8 unpacking to docker.io/library/calc-web:latest 0.1s done
+#8 DONE 0.3s
 [Pipeline] }
 [Pipeline] // dir
 [Pipeline] }
@@ -153,7 +155,7 @@ test/unit/util_test.py ..                                                [100%]
 Coverage HTML written to dir results/coverage
 Coverage XML written to file results/coverage.xml
 
-======================= 7 passed, 1 deselected in 0.30s ========================
+======================= 7 passed, 1 deselected in 0.18s ========================
 docker cp unit-tests:/opt/calc/results ./
 docker rm unit-tests || true
 unit-tests
